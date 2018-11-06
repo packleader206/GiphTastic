@@ -3,7 +3,7 @@
 //wait for page to load before running Javascript
 $(document).ready(function() {
 
-    let topics = ["Seattle Seahawks", "Seattle Mariners", "Seattle Sounders", "Chicago Bulls", "Portland Trailblazers", "Colorado Rockies", "Chicago White Sox", "Chicago Cubs", "Oakland Raiders", "San Francisco 49ers", "Dallas Cowboys"];
+    let topics = ["Seattle Seahawks", "Seattle Mariners", "Seattle Sounders", "Chicago Bulls", "Portland Trailblazers", "Colorado Rockies", "Chicago White Sox", "Chicago Cubs", "Oakland Raiders", "San Francisco 49ers", "Los Angeles Lakers"];
 
     function generateButtons() {
         //clear out the div/buttons before generating new ones using the array since new buttons will be generated each time including the existing ones, this keeps the buttons from duplicating
@@ -83,6 +83,8 @@ $(document).ready(function() {
         topics.push(newButton);
         console.log(topics);
         generateButtons();
+        $("#addTeam-form").reset();
+        
     });
 
     //event listener when user clicks each of the populated gif images, logic toggles between still and animated on-click depending on current state
