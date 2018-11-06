@@ -10,7 +10,7 @@ $(document).ready(function() {
         $("#button-section").empty();
 
         //loops through the topics array, generates button element in html and also adds classes & attributes to associated button, then appends to parent DIV
-        for (i=0; i < topics.length; i++) {
+        for (var i = 0; i < topics.length; i++) {
             let button = $("<button>");
             button.attr("type", "button");
             button.attr("data", topics[i]);
@@ -18,64 +18,78 @@ $(document).ready(function() {
             button.text(topics[i]);
             $("#button-section").append(button);
         };
-    }
-
+    };
+    //invoke function
     generateButtons();
 
     //on click of generated buttons, retrieve 10 images from Giphy
     $("#button-section").on("click", ".btn", function() {
-    
-        //event.preventDefault();
-        var team = $(this).attr("data");
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + team + "&api_key=sxdozw0HBzrDeHaarpYpWmdrCNtQWRQ2&limit=10";
+        
+        //clears any existing gifs since new gifs will be generated each time
+        $("#gif-section").empty();
+        event.preventDefault();
 
+        //variables to get API data.  Team variable = data for team-button clicked. QueryURL to specify which team to pull data for using assigned API key, specifying a limit of 10 images.
+        let team = $(this).attr("data");
+        let queryURL = "https://api.giphy.com/v1/gifs/search?q=" + team + "&api_key=sxdozw0HBzrDeHaarpYpWmdrCNtQWRQ2&limit=10";
+
+        //JQuery Ajax call for 'promise' of data
         $.ajax({
             url: queryURL,
             method: "GET"
         }).then(function(response) {
             console.log(response);
-
-            var results = response.data;
+            
+            //create variable to set up for loop
+            let results = response.data;
 
             //create for loop to loop through data of each returned image
             for (var i = 0; i < results.length; i++) {
             
-                //create empty Div to house images, create empty <p> element to house rating,
-                var imageDiv = $("<div>");
-                var pElement = $("<p>");
-                pElement.text(results[i].rating);
-                var pElement = $("<p>").text("Rating: " + results[i].rating);
+                //create empty Div to house images & rating adds classes to the Div
+                let imageDiv = $("<div>");
+                imageDiv.addClass("d-inline-block iDiv");
 
-                var teamImage = $("<img>")
+                //create p element to display rating, then adds rating to HTML for corresponding image
+                let pElement = $("<p>");
+                pElement.addClass("pRating");
+                pElement.text("Rating: " + results[i].rating);
+                
+                //creates image elements in html for associated images, set's attributes and adds class
+                let teamImage = $("<img>")
                 teamImage.attr("src", results[i].images.fixed_height_still.url);
                 teamImage.attr("stillImageURL", results[i].images.fixed_height_still.url);
                 teamImage.attr("animatedImageURL", results[i].images.fixed_height.url);
                 teamImage.attr("gifState", "still");
                 teamImage.addClass("gif");
 
-
+                //appends image and rating elements to the imageDiv
                 imageDiv.append(teamImage);
                 imageDiv.append(pElement);
+
+                //prepends the imageDiv to the parent Div #gif-section
                 $("#gif-section").prepend(imageDiv);
-            }
-        })
-    })
+            };
+        });
+    });
+
     //event listener for #add-team button, takes user input in the #team-input field of the form and adds/pushes it to the Topics Array, then runs the buttonGenerator function to re-create buttons out of the entire array.
     $("#add-team").on("click", function(event){
         event.preventDefault();
         console.log("#add-team");
-
-        var newButton = $("#team-input").val();
+        
+        //grabs user input, then pushes it to topics array, then generates buttons for all the teams in the topics array
+        let newButton = $("#team-input").val();
         topics.push(newButton);
         console.log(topics);
         generateButtons();
-    })
+    });
 
-    //event listner when user clicks each of the populated gif images, toggles between still and animated
+    //event listener when user clicks each of the populated gif images, logic toggles between still and animated on-click depending on current state
     $("#gif-section").on("click", ".gif", function(event){
         event.preventDefault();
 
-        var state = $(this).attr("gifState");
+        let state = $(this).attr("gifState");
 
         if (state === "still") {
             $(this).attr("src", $(this).attr("animatedImageURL"));
@@ -84,8 +98,8 @@ $(document).ready(function() {
         else {
             $(this).attr("src", $(this).attr("stillImageURL"));
             $(this).attr("gifState", "still");
-        }
-    })
+        };
+    });
 
 
 });
