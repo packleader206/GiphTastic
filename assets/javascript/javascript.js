@@ -4,6 +4,7 @@
 $(document).ready(function() {
 
     let topics = ["Seattle Seahawks", "Seattle Mariners", "Seattle Sounders", "Chicago Bulls", "Portland Trailblazers", "Colorado Rockies", "Chicago White Sox", "Chicago Cubs", "Oakland Raiders", "San Francisco 49ers", "Los Angeles Lakers"];
+    let crowdCheerSound = new Audio("assets/sounds/cheering1.wav");
 
     function generateButtons() {
         //clear out the div/buttons before generating new ones using the array since new buttons will be generated each time including the existing ones, this keeps the buttons from duplicating
@@ -69,6 +70,8 @@ $(document).ready(function() {
 
                 //prepends the imageDiv to the parent Div #gif-section
                 $("#gif-section").prepend(imageDiv);
+
+                crowdCheerSound.play();
             };
         });
     });
@@ -83,7 +86,9 @@ $(document).ready(function() {
         topics.push(newButton);
         console.log(topics);
         generateButtons();
-        $("#addTeam-form").reset();
+
+        //clears form after user adds button
+        $("#addTeam-form").trigger("reset");
         
     });
 

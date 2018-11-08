@@ -4,6 +4,10 @@
     margin: 5px;
 }
 
+h1 {
+    font-size: 60px;
+}
+
 .iDiv {
     margin: 5px;
     border: 2px solid red;
@@ -35,7 +39,7 @@ body {
 
 .instructions {
     color: white;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 300;
     font-family: Georgia, 'Times New Roman', Times, serif;
 
