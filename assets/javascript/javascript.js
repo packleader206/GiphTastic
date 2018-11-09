@@ -5,6 +5,7 @@ $(document).ready(function() {
 
     let topics = ["Seattle Seahawks", "Seattle Mariners", "Seattle Sounders", "Chicago Bulls", "Portland Trailblazers", "Colorado Rockies", "Chicago White Sox", "Chicago Cubs", "Oakland Raiders", "San Francisco 49ers", "Los Angeles Lakers"];
     let crowdCheerSound = new Audio("assets/sounds/cheering1.wav");
+    let addButtonSound = new Audio("assets/sounds/addButtonSound1.wav");
 
     function generateButtons() {
         //clear out the div/buttons before generating new ones using the array since new buttons will be generated each time including the existing ones, this keeps the buttons from duplicating
@@ -20,7 +21,7 @@ $(document).ready(function() {
             $("#button-section").append(button);
         };
     };
-    //invoke function
+    //invoke function to start, populates the page with buttons of teams already in the topics array
     generateButtons();
 
     //on click of generated buttons, retrieve 10 images from Giphy
@@ -86,6 +87,7 @@ $(document).ready(function() {
         topics.push(newButton);
         console.log(topics);
         generateButtons();
+        addButtonSound.play();
 
         //clears form after user adds button
         $("#addTeam-form").trigger("reset");
