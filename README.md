@@ -1,4 +1,4 @@
-# Sports Teams GiphTastic
+# GiphTastic Sports Team Image Generator
 
 ## Overview
 
